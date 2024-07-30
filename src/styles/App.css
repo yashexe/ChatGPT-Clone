@@ -97,13 +97,6 @@ button:hover {
   background-color: #ccc;
   color: rgb(37, 36, 36);
 }
-
-.response {
-  color: #ccc;
-  font-weight: bold;
-  font-size: 20px;
-}
-
 .icons a img {
   height: 50px;
   width: auto;
@@ -114,4 +107,25 @@ button:hover {
   color: #ccc;
   margin: 0;
   font-size: 30px;
+}
+
+
+.bubble-wrapper {
+  border-radius: 20px;
+  padding: 15px 20px 15px 20px;
+  margin-bottom: 50px;
+
+  max-width: 50%;
+  word-wrap: break-word;
+}
+.bubble-wrapper.user {
+  background-color: #5e6a81;
+}
+.bubble-wrapper.gpt {
+  background-color: #284d92;
+}
+.bubble-text {
+  color: #ccc;
+  font-weight: bold;
+  font-size: 20px;
 }

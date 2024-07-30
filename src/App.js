@@ -6,13 +6,18 @@ import { Chatbox } from './components/Chatbox'
 import { useState } from 'react'
 
 function App() {
-  const [response, setResponse] = useState('')
+  const [bubbles, setBubbles] = useState([])
+
+  const addBubble = (text, type) => {
+    console.log(`Adding bubble: ${text}, type: ${type}`); // Debugging
+    setBubbles([...bubbles, { text, type }])
+  }
 
   return (
     <div className="App">
       <Header />
-      <GPTResponse response={response} />
-      <Chatbox onResponse={setResponse} />
+      <GPTResponse bubbles={bubbles} />
+      <Chatbox onAddBubble={addBubble} />
     </div>
   )
 }

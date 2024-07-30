@@ -1,24 +1,30 @@
+import { useState } from 'react'
 import { getOpenAIResponse } from '../services/openAIService'
 
-import { useState } from 'react'
-
-export const Chatbox = ({ onResponse }) => {
+export const Chatbox = ({ onAddBubble }) => {
   const [input, setInput] = useState('')
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (input.trim() === '') return
+    e.preventDefault();
+    if (input.trim() === '') return;
     try {
-      setInput('')
-      const result = await getOpenAIResponse(input)
-      onResponse(result)
+      onAddBubble(input, 'user');
+      setInput('');
+      setTimeout(async () => {
+        try {
+          const result = await getOpenAIResponse(input);
+          onAddBubble(result, 'gpt');
+        } catch (error) {
+          console.error('Error fetching GPT response:', error);
+        }
+      }, 100); // 100ms delay
     } catch (error) {
-      console.error('Error:', error)
+      console.error('Error adding user bubble:', error);
     }
   }
 
-  //Allow for text area to be submitted with "Enter" key, unless using Shift+Enter
-  const handleKeyDown = e => {
+
+  const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
       handleSubmit(e)
@@ -28,9 +34,12 @@ export const Chatbox = ({ onResponse }) => {
   return (
     <div className="chatbox">
       <form onSubmit={handleSubmit} className='chatbox-form'>
-        <textarea id='promptarea' placeholder="Enter your prompt here."
-          value={input} 
-          onChange={e => setInput(e.target.value)} onKeyDown={handleKeyDown}
+        <textarea
+          id='promptarea'
+          placeholder="Enter your prompt here."
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
         <button className={input ? 'input-button-highlighted' : 'input-button'} type="submit">
           Submit

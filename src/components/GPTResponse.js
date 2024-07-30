@@ -1,16 +1,11 @@
-import Typewriter from 'typewriter-effect'
+import { Bubble } from './Bubble'
 
-export const GPTResponse = ({response}) => {
-    return (
-        <div className='gpt-response'>
-            {response && (
-            <div className="response">
-                <Typewriter key={response}
-                onInit={typewriter => typewriter.typeString(response).start()}
-                options={{typeSpeed: 50, delay: 1}}
-                />
-            </div>
-            )}
-        </div>
-    );
+export const GPTResponse = ({ bubbles }) => {
+  return (
+    <div className='gpt-response'>
+      {bubbles.map((bubble, index) => (
+        <Bubble key={`${bubble.type}-${index}`} text={bubble.text} type={bubble.type} />
+      ))}
+    </div>
+  )
 }
